@@ -1,0 +1,11 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: live-room-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123123  
+      MYSQL_DATABASE: live_room_db   
+      TZ: Asia/Shanghai              
+    ports:
+      - "3306:3306"                  

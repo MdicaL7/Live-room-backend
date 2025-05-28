@@ -1,0 +1,2 @@
+mysql:
+  dsn: "root:123123@tcp(localhost:3306)/live_room_db?charset=utf8mb4&parseTime=True&loc=Local"
