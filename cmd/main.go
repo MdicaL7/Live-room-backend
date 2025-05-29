@@ -5,7 +5,9 @@ import (
 	"live_room/internal/handler"
 	websocket "live_room/internal/webSocket"
 	"live_room/pkg/db"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +19,16 @@ func main() {
 	db.InitMySQL(dsn)
 	defer db.CloseMySQL()
 	r := gin.Default()
+	// 添加 CORS 支持
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+	r.Static("/videos", "./videos")
 	liveRoom := &handler.LiveRoom{}
 	//获取直播列表路由
 	r.GET("/v1/api/liveRoom", liveRoom.GetLiveRooms)
